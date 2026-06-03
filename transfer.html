@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transfer Money – Daddy's Money Bank</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div id="loadingOverlay" class="loading-overlay">
+  <div class="loader"><div class="logo-icon"><i class="fa-solid fa-landmark"></i></div><p>Loading...</p></div>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="app-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><i class="fa-solid fa-landmark"></i></div>
+      <div class="logo-text">Daddy's Money<span>Private Banking</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Main Menu</div>
+      <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-grid-2"></i> Dashboard</a>
+      <a href="account.html" class="nav-item"><i class="fa-solid fa-wallet"></i> Account Summary</a>
+      <a href="transfer.html" class="nav-item"><i class="fa-solid fa-arrow-right-arrow-left"></i> Transfer Money</a>
+      <a href="history.html" class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i> Transaction History</a>
+      <div class="nav-label">Account</div>
+      <a href="profile.html" class="nav-item"><i class="fa-solid fa-circle-user"></i> Profile & Settings</a>
+      <a href="support.html" class="nav-item"><i class="fa-solid fa-headset"></i> Support</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="user-mini">
+        <div class="avatar" id="sidebarAvatar">JD</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarUserName">John Daddy</div>
+          <div class="user-role">Premium Member</div>
+        </div>
+        <i class="fa-solid fa-right-from-bracket logout-btn" id="logoutBtn" title="Logout"></i>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="page-title">Transfer Money</div>
+          <div class="page-subtitle">Send funds instantly</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <div class="transfer-layout">
+        <!-- TRANSFER FORM -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Send Money</div>
+              <div class="card-subtitle">Transfer to any DMB account</div>
+            </div>
+            <div style="background:var(--success-light);border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;color:var(--success);">
+              <i class="fa-solid fa-shield-halved"></i> Secured
+            </div>
+          </div>
+
+          <!-- STEP INDICATOR -->
+          <div style="display:flex;gap:0;margin-bottom:32px;position:relative;">
+            <div style="position:absolute;top:14px;left:14px;right:14px;height:2px;background:var(--gray-200);z-index:0;"></div>
+            <div style="flex:1;text-align:center;position:relative;z-index:1;" id="step1Ind">
+              <div style="width:28px;height:28px;border-radius:50%;background:var(--navy);color:var(--white);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin-bottom:8px;">1</div>
+              <div style="font-size:11px;font-weight:600;color:var(--navy);">Recipient</div>
+            </div>
+            <div style="flex:1;text-align:center;position:relative;z-index:1;" id="step2Ind">
+              <div style="width:28px;height:28px;border-radius:50%;background:var(--gray-200);color:var(--gray-400);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin-bottom:8px;" id="step2Circle">2</div>
+              <div style="font-size:11px;font-weight:600;color:var(--gray-400);" id="step2Label">Amount</div>
+            </div>
+            <div style="flex:1;text-align:center;position:relative;z-index:1;">
+              <div style="width:28px;height:28px;border-radius:50%;background:var(--gray-200);color:var(--gray-400);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin-bottom:8px;" id="step3Circle">3</div>
+              <div style="font-size:11px;font-weight:600;color:var(--gray-400);" id="step3Label">Confirm</div>
+            </div>
+          </div>
+
+          <!-- STEP 1: RECIPIENT -->
+          <div id="stepRecipient">
+            <div class="form-group">
+              <label>Recipient Email or Account Number</label>
+              <div class="input-wrap">
+                <input type="text" id="recipientId" placeholder="email@example.com or DMB-XXXX-XXXX">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+            </div>
+            <div id="recipientPreview" style="display:none;background:var(--gray-100);border-radius:var(--radius-sm);padding:16px;margin-bottom:20px;border:2px solid var(--success);display:flex;align-items:center;gap:14px;">
+              <div style="width:44px;height:44px;background:linear-gradient(135deg,var(--gold),var(--gold-light));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--navy);font-size:16px;" id="recipientAvatar">?</div>
+              <div>
+                <div style="font-weight:700;" id="recipientName">—</div>
+                <div style="font-size:12px;color:var(--gray-400);" id="recipientAcct">—</div>
+              </div>
+              <i class="fa-solid fa-circle-check" style="color:var(--success);margin-left:auto;font-size:20px;"></i>
+            </div>
+            <button class="btn btn-primary btn-full" onclick="lookupRecipient()"><i class="fa-solid fa-arrow-right"></i> Continue</button>
+          </div>
+
+          <!-- STEP 2: AMOUNT -->
+          <div id="stepAmount" style="display:none;">
+            <div class="form-group">
+              <label>Transfer Amount (USD)</label>
+              <div class="amount-input-wrap">
+                <div class="currency-badge">USD $</div>
+                <input type="number" id="transferAmount" placeholder="0.00" min="0.01" step="0.01" class="no-icon" oninput="updatePreview()">
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">
+              <button class="btn btn-outline btn-sm" onclick="setAmount(50)">$50</button>
+              <button class="btn btn-outline btn-sm" onclick="setAmount(100)">$100</button>
+              <button class="btn btn-outline btn-sm" onclick="setAmount(250)">$250</button>
+              <button class="btn btn-outline btn-sm" onclick="setAmount(500)">$500</button>
+              <button class="btn btn-outline btn-sm" onclick="setAmount(1000)">$1,000</button>
+              <button class="btn btn-outline btn-sm" onclick="setAmount(2500)">$2,500</button>
+            </div>
+            <div class="form-group">
+              <label>Note (Optional)</label>
+              <div class="input-wrap">
+                <input type="text" id="transferNote" placeholder="What's this for?">
+                <i class="fa-solid fa-note-sticky"></i>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;">
+              <button class="btn btn-outline" onclick="goStep(1)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+              <button class="btn btn-primary btn-full" onclick="goStep(3)"><i class="fa-solid fa-arrow-right"></i> Review</button>
+            </div>
+          </div>
+
+          <!-- STEP 3: CONFIRM -->
+          <div id="stepConfirm" style="display:none;">
+            <div style="background:var(--gray-100);border-radius:var(--radius-sm);padding:24px;margin-bottom:24px;">
+              <div style="text-align:center;margin-bottom:20px;">
+                <div style="font-size:13px;color:var(--gray-400);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">You're sending</div>
+                <div style="font-family:'Playfair Display',serif;font-size:44px;font-weight:700;color:var(--navy);" id="confirmAmount">$0.00</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <div style="display:flex;justify-content:space-between;font-size:14px;">
+                  <span style="color:var(--gray-400);font-weight:600;">To</span>
+                  <span style="font-weight:700;" id="confirmTo">—</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:14px;">
+                  <span style="color:var(--gray-400);font-weight:600;">Note</span>
+                  <span style="font-weight:600;" id="confirmNote">—</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:14px;">
+                  <span style="color:var(--gray-400);font-weight:600;">Fee</span>
+                  <span style="font-weight:600;color:var(--success);">Free</span>
+                </div>
+                <hr style="border:none;height:1px;background:var(--gray-200);margin:4px 0;">
+                <div style="display:flex;justify-content:space-between;font-size:14px;">
+                  <span style="color:var(--gray-400);font-weight:600;">New Balance</span>
+                  <span style="font-weight:700;" id="confirmNewBal">—</span>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;">
+              <button class="btn btn-outline" onclick="goStep(2)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+              <button class="btn btn-gold btn-full" id="sendBtn" onclick="doTransfer()"><i class="fa-solid fa-paper-plane"></i> Send Money</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div style="display:flex;flex-direction:column;gap:24px;">
+          <div class="card" style="background:linear-gradient(135deg,var(--navy-light),var(--navy));color:var(--white);">
+            <div style="font-size:12px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.4);margin-bottom:8px;font-weight:600;">Your Balance</div>
+            <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;margin-bottom:4px;" id="senderBalance">—</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.4);">Available to transfer</div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" style="margin-bottom:16px;">Transfer Tips</div>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <i class="fa-solid fa-circle-check" style="color:var(--success);margin-top:2px;"></i>
+                <div style="font-size:13px;color:var(--gray-600);">Transfers are instant between DMB accounts.</div>
+              </div>
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <i class="fa-solid fa-circle-check" style="color:var(--success);margin-top:2px;"></i>
+                <div style="font-size:13px;color:var(--gray-600);">Use the recipient's registered email or account number.</div>
+              </div>
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <i class="fa-solid fa-circle-check" style="color:var(--success);margin-top:2px;"></i>
+                <div style="font-size:13px;color:var(--gray-600);">All transfers are free with zero hidden fees.</div>
+              </div>
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <i class="fa-solid fa-triangle-exclamation" style="color:var(--gold);margin-top:2px;"></i>
+                <div style="font-size:13px;color:var(--gray-600);">Double-check the recipient before confirming.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" style="margin-bottom:16px;">Recent Recipients</div>
+            <div id="recentRecipients">
+              <div class="empty-state" style="padding:20px 0;"><i class="fa-solid fa-users"></i><h3 style="font-size:14px;margin-top:8px;">No recent recipients</h3></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  const user = DMB.requireAuth();
+  let resolvedRecipient = null;
+  let currentStep = 1;
+
+  if (user) {
+    initSidebar();
+    const currentUser = DMB.getCurrentUser();
+    document.getElementById('senderBalance').textContent = DMB.formatCurrency(currentUser.balance);
+
+    // Recent recipients from transactions
+    const txns = DMB.getUserTransactions(currentUser.id);
+    const transferTxns = txns.filter(t => t.type === 'debit' && t.category === 'Transfer');
+    const recentEl = document.getElementById('recentRecipients');
+    if (transferTxns.length > 0) {
+      recentEl.innerHTML = transferTxns.slice(0, 3).map(t => `
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--gray-100);">
+          <div style="width:36px;height:36px;background:var(--gray-100);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--navy);">T</div>
+          <div style="flex:1;"><div style="font-size:13px;font-weight:600;">${t.description.replace('Transfer to ','')}</div><div style="font-size:11px;color:var(--gray-400);">${DMB.formatDate(t.date)}</div></div>
+          <div style="font-size:13px;color:var(--danger);font-weight:600;">-${DMB.formatCurrency(t.amount)}</div>
+        </div>
+      `).join('');
+    }
+  }
+
+  function goStep(step) {
+    const u = DMB.getCurrentUser();
+    if (step === 2) {
+      if (!resolvedRecipient) { Toast.error('No Recipient', 'Please look up a recipient first.'); return; }
+      document.getElementById('stepRecipient').style.display = 'none';
+      document.getElementById('stepAmount').style.display = 'block';
+      document.getElementById('stepConfirm').style.display = 'none';
+    } else if (step === 3) {
+      const amount = parseFloat(document.getElementById('transferAmount').value);
+      if (!amount || amount <= 0) { Toast.error('Invalid Amount', 'Enter a valid amount.'); return; }
+      if (amount > u.balance) { Toast.error('Insufficient Funds', 'You don\'t have enough balance.'); return; }
+      const note = document.getElementById('transferNote').value || 'No note';
+      document.getElementById('confirmAmount').textContent = DMB.formatCurrency(amount);
+      document.getElementById('confirmTo').textContent = resolvedRecipient.firstName + ' ' + resolvedRecipient.lastName;
+      document.getElementById('confirmNote').textContent = note;
+      document.getElementById('confirmNewBal').textContent = DMB.formatCurrency(u.balance - amount);
+      document.getElementById('stepRecipient').style.display = 'none';
+      document.getElementById('stepAmount').style.display = 'none';
+      document.getElementById('stepConfirm').style.display = 'block';
+    } else if (step === 1) {
+      document.getElementById('stepRecipient').style.display = 'block';
+      document.getElementById('stepAmount').style.display = 'none';
+      document.getElementById('stepConfirm').style.display = 'none';
+    }
+    currentStep = step;
+    updateStepUI(step);
+  }
+
+  function updateStepUI(step) {
+    [1, 2, 3].forEach(s => {
+      const circle = document.getElementById(`step${s}Circle`);
+      const label = document.getElementById(`step${s}Label`);
+      if (!circle) return;
+      if (s < step) {
+        circle.style.background = 'var(--success)';
+        circle.style.color = 'var(--white)';
+        circle.innerHTML = '<i class="fa-solid fa-check"></i>';
+        if (label) label.style.color = 'var(--success)';
+      } else if (s === step) {
+        circle.style.background = 'var(--navy)';
+        circle.style.color = 'var(--white)';
+        circle.textContent = s;
+        if (label) label.style.color = 'var(--navy)';
+      } else {
+        circle.style.background = 'var(--gray-200)';
+        circle.style.color = 'var(--gray-400)';
+        circle.textContent = s;
+        if (label) label.style.color = 'var(--gray-400)';
+      }
+    });
+  }
+
+  function lookupRecipient() {
+    const id = document.getElementById('recipientId').value.trim();
+    if (!id) { Toast.error('Required', 'Enter email or account number.'); return; }
+    const users = DMB.getUsers();
+    const currentUser = DMB.getCurrentUser();
+    const found = users.find(u => (u.email === id || u.accountNumber === id) && u.id !== currentUser.id);
+    if (!found) { Toast.error('Not Found', 'No account found with that email or account number.'); return; }
+    resolvedRecipient = found;
+    document.getElementById('recipientAvatar').textContent = found.avatar || (found.firstName[0] + found.lastName[0]).toUpperCase();
+    document.getElementById('recipientName').textContent = found.firstName + ' ' + found.lastName;
+    document.getElementById('recipientAcct').textContent = found.accountNumber;
+    document.getElementById('recipientPreview').style.display = 'flex';
+    Toast.success('Recipient Found', `${found.firstName} ${found.lastName} is verified.`);
+    setTimeout(() => goStep(2), 600);
+  }
+
+  function setAmount(amt) {
+    document.getElementById('transferAmount').value = amt;
+    updatePreview();
+  }
+
+  function updatePreview() {
+    const u = DMB.getCurrentUser();
+    const amt = parseFloat(document.getElementById('transferAmount').value) || 0;
+    document.getElementById('senderBalance').textContent = DMB.formatCurrency(Math.max(0, u.balance - amt));
+  }
+
+  function doTransfer() {
+    const amount = parseFloat(document.getElementById('transferAmount').value);
+    const note = document.getElementById('transferNote').value;
+    const btn = document.getElementById('sendBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+    setTimeout(() => {
+      const r = DMB.transfer(resolvedRecipient.email, amount, note);
+      if (r.ok) {
+        Toast.success('Transfer Successful!', `${DMB.formatCurrency(amount)} sent to ${r.recipient}.`);
+        setTimeout(() => window.location.href = 'dashboard.html', 1000);
+      } else {
+        Toast.error('Transfer Failed', r.msg);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Money';
+      }
+    }, 1200);
+  }
+
+  window.lookupRecipient = lookupRecipient;
+  window.goStep = goStep;
+  window.setAmount = setAmount;
+  window.updatePreview = updatePreview;
+  window.doTransfer = doTransfer;
+</script>
+</body>
+</html>

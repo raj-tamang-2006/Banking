@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Summary – Daddy's Money Bank</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div id="loadingOverlay" class="loading-overlay">
+  <div class="loader"><div class="logo-icon"><i class="fa-solid fa-landmark"></i></div><p>Loading...</p></div>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="app-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><i class="fa-solid fa-landmark"></i></div>
+      <div class="logo-text">Daddy's Money<span>Private Banking</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Main Menu</div>
+      <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-grid-2"></i> Dashboard</a>
+      <a href="account.html" class="nav-item"><i class="fa-solid fa-wallet"></i> Account Summary</a>
+      <a href="transfer.html" class="nav-item"><i class="fa-solid fa-arrow-right-arrow-left"></i> Transfer Money</a>
+      <a href="history.html" class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i> Transaction History</a>
+      <div class="nav-label">Account</div>
+      <a href="profile.html" class="nav-item"><i class="fa-solid fa-circle-user"></i> Profile & Settings</a>
+      <a href="support.html" class="nav-item"><i class="fa-solid fa-headset"></i> Support</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="user-mini">
+        <div class="avatar" id="sidebarAvatar">JD</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarUserName">John Daddy</div>
+          <div class="user-role">Premium Member</div>
+        </div>
+        <i class="fa-solid fa-right-from-bracket logout-btn" id="logoutBtn" title="Logout"></i>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="page-title">Account Summary</div>
+          <div class="page-subtitle">Your financial overview</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-icon-btn" onclick="window.location.href='transfer.html'">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <!-- BALANCE HERO -->
+      <div style="background:linear-gradient(135deg,var(--navy-light) 0%,var(--navy) 100%);border-radius:var(--radius);padding:40px;color:var(--white);margin-bottom:28px;position:relative;overflow:hidden;">
+        <div style="position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(201,168,76,0.15) 0%,transparent 70%);right:-50px;top:-50px;"></div>
+        <div style="position:relative;z-index:1;">
+          <div style="font-size:12px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.5);margin-bottom:12px;font-weight:600;">Available Balance</div>
+          <div style="font-family:'Playfair Display',serif;font-size:52px;font-weight:700;margin-bottom:8px;line-height:1;" id="heroBalance">$0.00</div>
+          <div style="font-size:14px;color:rgba(255,255,255,0.5);" id="heroAcct">Account: —</div>
+          <div style="display:flex;gap:16px;margin-top:32px;">
+            <button class="btn btn-gold btn-sm" onclick="showDeposit()"><i class="fa-solid fa-plus"></i> Deposit</button>
+            <button class="btn btn-outline btn-sm" style="border-color:rgba(255,255,255,0.3);color:var(--white);" onclick="showWithdraw()"><i class="fa-solid fa-minus"></i> Withdraw</button>
+            <a href="transfer.html" class="btn btn-outline btn-sm" style="border-color:rgba(255,255,255,0.3);color:var(--white);"><i class="fa-solid fa-paper-plane"></i> Transfer</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS ROW -->
+      <div class="stats-grid" style="margin-bottom:28px;">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-arrow-down-left"></i></div>
+          <div class="stat-label">Total Credits</div>
+          <div class="stat-value" id="totalCredits">$0</div>
+          <div class="stat-change up">All time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-arrow-up-right"></i></div>
+          <div class="stat-label">Total Debits</div>
+          <div class="stat-value" id="totalDebits">$0</div>
+          <div class="stat-change down">All time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-receipt"></i></div>
+          <div class="stat-label">Transactions</div>
+          <div class="stat-value" id="txnCount">0</div>
+          <div class="stat-change" style="color:var(--gray-400);">All time</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-icon"><i class="fa-solid fa-trophy"></i></div>
+          <div class="stat-label">Account Status</div>
+          <div class="stat-value" style="font-size:22px;">Premium</div>
+          <div class="stat-change" style="color:rgba(10,22,40,0.5);">Gold tier</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <!-- ACCOUNT DETAILS -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Account Details</div>
+            <span class="badge completed"><i class="fa-solid fa-circle-check"></i> Active</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--gray-100);">
+              <span style="font-size:13px;color:var(--gray-400);font-weight:600;">Account Holder</span>
+              <span style="font-size:14px;font-weight:600;" id="detailName">—</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--gray-100);">
+              <span style="font-size:13px;color:var(--gray-400);font-weight:600;">Account Number</span>
+              <span style="font-size:14px;font-weight:600;font-family:'Playfair Display',serif;" id="detailAcct">—</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--gray-100);">
+              <span style="font-size:13px;color:var(--gray-400);font-weight:600;">Account Type</span>
+              <span style="font-size:14px;font-weight:600;" id="detailType">—</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--gray-100);">
+              <span style="font-size:13px;color:var(--gray-400);font-weight:600;">Email</span>
+              <span style="font-size:14px;font-weight:600;" id="detailEmail">—</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--gray-100);">
+              <span style="font-size:13px;color:var(--gray-400);font-weight:600;">Phone</span>
+              <span style="font-size:14px;font-weight:600;" id="detailPhone">—</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:14px 0;">
+              <span style="font-size:13px;color:var(--gray-400);font-weight:600;">Member Since</span>
+              <span style="font-size:14px;font-weight:600;" id="detailJoined">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK STATS -->
+        <div class="card">
+          <div class="card-header"><div class="card-title">Spending Breakdown</div></div>
+          <div id="spendingBreakdown" style="display:flex;flex-direction:column;gap:12px;"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div id="depositModal" style="display:none;position:fixed;inset:0;background:rgba(10,22,40,0.6);z-index:500;align-items:center;justify-content:center;">
+  <div class="card" style="width:380px;max-width:90vw;">
+    <div class="card-header">
+      <div class="card-title">Deposit Funds</div>
+      <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:18px;color:var(--gray-400);" onclick="closeModals()"></i>
+    </div>
+    <div class="form-group">
+      <label>Amount (USD)</label>
+      <div class="amount-input-wrap">
+        <div class="currency-badge">$</div>
+        <input type="number" id="depositAmount" placeholder="0.00" min="1" step="0.01" class="no-icon">
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:8px;">
+      <button class="btn btn-outline btn-full" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-primary btn-full" onclick="doDeposit()"><i class="fa-solid fa-plus"></i> Deposit</button>
+    </div>
+  </div>
+</div>
+<div id="withdrawModal" style="display:none;position:fixed;inset:0;background:rgba(10,22,40,0.6);z-index:500;align-items:center;justify-content:center;">
+  <div class="card" style="width:380px;max-width:90vw;">
+    <div class="card-header">
+      <div class="card-title">Withdraw Funds</div>
+      <i class="fa-solid fa-xmark" style="cursor:pointer;font-size:18px;color:var(--gray-400);" onclick="closeModals()"></i>
+    </div>
+    <div class="form-group">
+      <label>Amount (USD)</label>
+      <div class="amount-input-wrap">
+        <div class="currency-badge">$</div>
+        <input type="number" id="withdrawAmount" placeholder="0.00" min="1" step="0.01" class="no-icon">
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:8px;">
+      <button class="btn btn-outline btn-full" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-danger btn-full" onclick="doWithdraw()"><i class="fa-solid fa-minus"></i> Withdraw</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  const user = DMB.requireAuth();
+  if (user) {
+    initSidebar();
+    function render() {
+      const u = DMB.getCurrentUser();
+      const txns = DMB.getUserTransactions(u.id);
+      document.getElementById('heroBalance').textContent = DMB.formatCurrency(u.balance);
+      document.getElementById('heroAcct').textContent = 'Account: ' + u.accountNumber;
+      document.getElementById('detailName').textContent = `${u.firstName} ${u.lastName}`;
+      document.getElementById('detailAcct').textContent = u.accountNumber;
+      document.getElementById('detailType').textContent = u.accountType;
+      document.getElementById('detailEmail').textContent = u.email;
+      document.getElementById('detailPhone').textContent = u.phone || '—';
+      document.getElementById('detailJoined').textContent = DMB.formatDate(u.joined);
+      const credits = txns.filter(t => t.type === 'credit').reduce((s, t) => s + t.amount, 0);
+      const debits = txns.filter(t => t.type === 'debit').reduce((s, t) => s + t.amount, 0);
+      document.getElementById('totalCredits').textContent = DMB.formatCurrency(credits);
+      document.getElementById('totalDebits').textContent = DMB.formatCurrency(debits);
+      document.getElementById('txnCount').textContent = txns.length;
+
+      // Spending breakdown by category
+      const cats = {};
+      txns.filter(t => t.type === 'debit').forEach(t => {
+        cats[t.category] = (cats[t.category] || 0) + t.amount;
+      });
+      const sorted = Object.entries(cats).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      const total = sorted.reduce((s, [, v]) => s + v, 0);
+      const el = document.getElementById('spendingBreakdown');
+      if (sorted.length === 0) {
+        el.innerHTML = '<div class="empty-state" style="padding:32px 0;"><i class="fa-solid fa-chart-pie"></i><h3>No spending data</h3></div>';
+      } else {
+        el.innerHTML = sorted.map(([cat, amt]) => {
+          const pct = total > 0 ? Math.round((amt / total) * 100) : 0;
+          return `
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+                <span style="font-size:13px;font-weight:600;">${cat}</span>
+                <span style="font-size:13px;color:var(--gray-400);">${DMB.formatCurrency(amt)}</span>
+              </div>
+              <div style="height:6px;background:var(--gray-100);border-radius:3px;overflow:hidden;">
+                <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--navy-light),var(--gold));border-radius:3px;transition:width 0.8s ease;"></div>
+              </div>
+            </div>`;
+        }).join('');
+      }
+    }
+    render();
+
+    function showDeposit() { document.getElementById('depositModal').style.display = 'flex'; }
+    function showWithdraw() { document.getElementById('withdrawModal').style.display = 'flex'; }
+    function closeModals() {
+      document.getElementById('depositModal').style.display = 'none';
+      document.getElementById('withdrawModal').style.display = 'none';
+    }
+    function doDeposit() {
+      const amount = parseFloat(document.getElementById('depositAmount').value);
+      if (!amount || amount <= 0) { Toast.error('Invalid Amount', 'Enter a valid deposit amount.'); return; }
+      const r = DMB.deposit(amount);
+      if (r.ok) { Toast.success('Deposited!', DMB.formatCurrency(amount) + ' added to your account.'); closeModals(); render(); }
+      else Toast.error('Failed', r.msg);
+    }
+    function doWithdraw() {
+      const amount = parseFloat(document.getElementById('withdrawAmount').value);
+      if (!amount || amount <= 0) { Toast.error('Invalid Amount', 'Enter a valid amount.'); return; }
+      const r = DMB.withdraw(amount);
+      if (r.ok) { Toast.success('Withdrawn!', DMB.formatCurrency(amount) + ' removed from your account.'); closeModals(); render(); }
+      else Toast.error('Failed', r.msg);
+    }
+    window.showDeposit = showDeposit; window.showWithdraw = showWithdraw;
+    window.closeModals = closeModals; window.doDeposit = doDeposit; window.doWithdraw = doWithdraw;
+  }
+</script>
+</body>
+</html>

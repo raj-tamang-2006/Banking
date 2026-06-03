@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile & Settings – Daddy's Money Bank</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div id="loadingOverlay" class="loading-overlay">
+  <div class="loader"><div class="logo-icon"><i class="fa-solid fa-landmark"></i></div><p>Loading...</p></div>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="app-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><i class="fa-solid fa-landmark"></i></div>
+      <div class="logo-text">Daddy's Money<span>Private Banking</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Main Menu</div>
+      <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-grid-2"></i> Dashboard</a>
+      <a href="account.html" class="nav-item"><i class="fa-solid fa-wallet"></i> Account Summary</a>
+      <a href="transfer.html" class="nav-item"><i class="fa-solid fa-arrow-right-arrow-left"></i> Transfer Money</a>
+      <a href="history.html" class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i> Transaction History</a>
+      <div class="nav-label">Account</div>
+      <a href="profile.html" class="nav-item"><i class="fa-solid fa-circle-user"></i> Profile & Settings</a>
+      <a href="support.html" class="nav-item"><i class="fa-solid fa-headset"></i> Support</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="user-mini">
+        <div class="avatar" id="sidebarAvatar">JD</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarUserName">John Daddy</div>
+          <div class="user-role">Premium Member</div>
+        </div>
+        <i class="fa-solid fa-right-from-bracket logout-btn" id="logoutBtn" title="Logout"></i>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="page-title">Profile & Settings</div>
+          <div class="page-subtitle">Manage your account preferences</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <!-- PROFILE HEADER -->
+      <div class="profile-header">
+        <div class="profile-avatar" id="profileAvatar">JD</div>
+        <div class="profile-info">
+          <h2 id="profileName">—</h2>
+          <p id="profileEmail">—</p>
+          <div class="profile-tags">
+            <span class="profile-tag"><i class="fa-solid fa-trophy"></i> Premium Member</span>
+            <span class="profile-tag"><i class="fa-solid fa-shield-halved"></i> Verified</span>
+            <span class="profile-tag" id="memberSinceTag">—</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-grid">
+        <!-- PERSONAL INFO -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Personal Information</div>
+              <div class="card-subtitle">Update your personal details</div>
+            </div>
+            <i class="fa-solid fa-user" style="font-size:20px;color:var(--gold);"></i>
+          </div>
+          <div class="form-group">
+            <label>First Name</label>
+            <div class="input-wrap">
+              <input type="text" id="pfFirst" placeholder="First name">
+              <i class="fa-solid fa-user"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <div class="input-wrap">
+              <input type="text" id="pfLast" placeholder="Last name">
+              <i class="fa-solid fa-user"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <div class="input-wrap">
+              <input type="email" id="pfEmail" placeholder="Email address">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <div class="input-wrap">
+              <input type="tel" id="pfPhone" placeholder="Phone number">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-full" onclick="savePersonal()">
+            <i class="fa-solid fa-floppy-disk"></i> Save Changes
+          </button>
+        </div>
+
+        <!-- SECURITY -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Security</div>
+              <div class="card-subtitle">Manage your password & security</div>
+            </div>
+            <i class="fa-solid fa-shield-halved" style="font-size:20px;color:var(--gold);"></i>
+          </div>
+          <div class="form-group">
+            <label>Current Password</label>
+            <div class="input-wrap">
+              <input type="password" id="curPassword" placeholder="Current password">
+              <i class="fa-solid fa-lock"></i>
+              <i class="fa-solid fa-eye toggle-pw"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>New Password</label>
+            <div class="input-wrap">
+              <input type="password" id="newPassword" placeholder="Min 8 characters">
+              <i class="fa-solid fa-lock"></i>
+              <i class="fa-solid fa-eye toggle-pw"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Confirm New Password</label>
+            <div class="input-wrap">
+              <input type="password" id="confPassword" placeholder="Repeat new password">
+              <i class="fa-solid fa-lock"></i>
+              <i class="fa-solid fa-eye toggle-pw"></i>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-full" onclick="changePassword()">
+            <i class="fa-solid fa-key"></i> Update Password
+          </button>
+        </div>
+
+        <!-- PREFERENCES -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Notifications</div>
+              <div class="card-subtitle">Control your alert preferences</div>
+            </div>
+            <i class="fa-solid fa-bell" style="font-size:20px;color:var(--gold);"></i>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--gray-100);">
+              <div>
+                <div style="font-size:14px;font-weight:600;">Transaction Alerts</div>
+                <div style="font-size:12px;color:var(--gray-400);">Receive alerts for all transactions</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="notifTxn" checked>
+                <span class="toggle-track"></span>
+              </label>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--gray-100);">
+              <div>
+                <div style="font-size:14px;font-weight:600;">Login Alerts</div>
+                <div style="font-size:12px;color:var(--gray-400);">Alert on new device login</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="notifLogin" checked>
+                <span class="toggle-track"></span>
+              </label>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--gray-100);">
+              <div>
+                <div style="font-size:14px;font-weight:600;">Promotional Emails</div>
+                <div style="font-size:12px;color:var(--gray-400);">Offers and product updates</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="notifPromo">
+                <span class="toggle-track"></span>
+              </label>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;">
+              <div>
+                <div style="font-size:14px;font-weight:600;">Monthly Statements</div>
+                <div style="font-size:12px;color:var(--gray-400);">Email your monthly statement</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="notifStatement" checked>
+                <span class="toggle-track"></span>
+              </label>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-full" style="margin-top:16px;" onclick="savePrefs()">
+            <i class="fa-solid fa-floppy-disk"></i> Save Preferences
+          </button>
+        </div>
+
+        <!-- DANGER ZONE -->
+        <div class="card" style="border:2px solid var(--danger-light);">
+          <div class="card-header">
+            <div>
+              <div class="card-title" style="color:var(--danger);">Danger Zone</div>
+              <div class="card-subtitle">Irreversible account actions</div>
+            </div>
+            <i class="fa-solid fa-triangle-exclamation" style="font-size:20px;color:var(--danger);"></i>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div style="background:var(--danger-light);border-radius:var(--radius-sm);padding:16px;">
+              <div style="font-size:14px;font-weight:600;color:var(--danger);margin-bottom:4px;">Clear All Transactions</div>
+              <div style="font-size:13px;color:var(--gray-600);margin-bottom:12px;">This will delete all your transaction history permanently.</div>
+              <button class="btn btn-danger btn-sm" onclick="clearTxns()"><i class="fa-solid fa-trash"></i> Clear History</button>
+            </div>
+            <div style="background:var(--danger-light);border-radius:var(--radius-sm);padding:16px;">
+              <div style="font-size:14px;font-weight:600;color:var(--danger);margin-bottom:4px;">Logout All Sessions</div>
+              <div style="font-size:13px;color:var(--gray-600);margin-bottom:12px;">Sign out from all active sessions immediately.</div>
+              <button class="btn btn-danger btn-sm" onclick="DMB.logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<style>
+.toggle-switch { position: relative; display: inline-flex; width: 44px; height: 24px; cursor: pointer; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-track {
+  position: absolute; inset: 0;
+  background: var(--gray-200);
+  border-radius: 12px;
+  transition: var(--transition);
+}
+.toggle-track::after {
+  content: '';
+  position: absolute;
+  width: 18px; height: 18px;
+  background: var(--white);
+  border-radius: 50%;
+  top: 3px; left: 3px;
+  transition: var(--transition);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+.toggle-switch input:checked + .toggle-track { background: var(--navy-light); }
+.toggle-switch input:checked + .toggle-track::after { transform: translateX(20px); }
+</style>
+
+<script src="app.js"></script>
+<script>
+  const user = DMB.requireAuth();
+  if (user) {
+    initSidebar();
+    const u = DMB.getCurrentUser();
+
+    // Fill form
+    document.getElementById('profileAvatar').textContent = u.avatar || (u.firstName[0] + u.lastName[0]).toUpperCase();
+    document.getElementById('profileName').textContent = `${u.firstName} ${u.lastName}`;
+    document.getElementById('profileEmail').textContent = u.email;
+    document.getElementById('memberSinceTag').textContent = '📅 Since ' + DMB.formatDate(u.joined);
+    document.getElementById('pfFirst').value = u.firstName;
+    document.getElementById('pfLast').value = u.lastName;
+    document.getElementById('pfEmail').value = u.email;
+    document.getElementById('pfPhone').value = u.phone || '';
+
+    function savePersonal() {
+      const first = document.getElementById('pfFirst').value.trim();
+      const last = document.getElementById('pfLast').value.trim();
+      const email = document.getElementById('pfEmail').value.trim();
+      const phone = document.getElementById('pfPhone').value.trim();
+      if (!first || !last || !email) { Toast.error('Missing Fields', 'Please fill in all required fields.'); return; }
+      if (!/\S+@\S+\.\S+/.test(email)) { Toast.error('Invalid Email', 'Enter a valid email address.'); return; }
+      const users = DMB.getUsers();
+      const dup = users.find(u2 => u2.email === email && u2.id !== u.id);
+      if (dup) { Toast.error('Email Taken', 'That email is already registered.'); return; }
+      const updated = { ...u, firstName: first, lastName: last, email, phone, avatar: (first[0] + last[0]).toUpperCase() };
+      DMB.updateUser(updated);
+      document.getElementById('profileAvatar').textContent = updated.avatar;
+      document.getElementById('profileName').textContent = `${first} ${last}`;
+      document.getElementById('profileEmail').textContent = email;
+      Toast.success('Profile Updated', 'Your personal info has been saved.');
+    }
+
+    function changePassword() {
+      const cur = document.getElementById('curPassword').value;
+      const nw = document.getElementById('newPassword').value;
+      const conf = document.getElementById('confPassword').value;
+      if (!cur || !nw || !conf) { Toast.error('Missing Fields', 'Fill in all password fields.'); return; }
+      if (DMB.hashPass(cur) !== u.password) { Toast.error('Wrong Password', 'Current password is incorrect.'); return; }
+      if (nw.length < 8) { Toast.error('Too Short', 'New password must be at least 8 characters.'); return; }
+      if (nw !== conf) { Toast.error('Mismatch', 'Passwords do not match.'); return; }
+      DMB.updateUser({ ...u, password: DMB.hashPass(nw) });
+      document.getElementById('curPassword').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confPassword').value = '';
+      Toast.success('Password Changed', 'Your password has been updated successfully.');
+    }
+
+    function savePrefs() {
+      Toast.success('Preferences Saved', 'Your notification settings have been updated.');
+    }
+
+    function clearTxns() {
+      if (!confirm('Are you sure? This will permanently delete all your transaction history.')) return;
+      const all = DMB.getTransactions().filter(t => t.userId !== u.id);
+      DMB.saveTransactions(all);
+      Toast.success('History Cleared', 'All your transactions have been deleted.');
+    }
+
+    window.savePersonal = savePersonal;
+    window.changePassword = changePassword;
+    window.savePrefs = savePrefs;
+    window.clearTxns = clearTxns;
+  }
+</script>
+</body>
+</html>

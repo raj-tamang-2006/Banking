@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support – Daddy's Money Bank</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div id="loadingOverlay" class="loading-overlay">
+  <div class="loader"><div class="logo-icon"><i class="fa-solid fa-landmark"></i></div><p>Loading...</p></div>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="app-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><i class="fa-solid fa-landmark"></i></div>
+      <div class="logo-text">Daddy's Money<span>Private Banking</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Main Menu</div>
+      <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-grid-2"></i> Dashboard</a>
+      <a href="account.html" class="nav-item"><i class="fa-solid fa-wallet"></i> Account Summary</a>
+      <a href="transfer.html" class="nav-item"><i class="fa-solid fa-arrow-right-arrow-left"></i> Transfer Money</a>
+      <a href="history.html" class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i> Transaction History</a>
+      <div class="nav-label">Account</div>
+      <a href="profile.html" class="nav-item"><i class="fa-solid fa-circle-user"></i> Profile & Settings</a>
+      <a href="support.html" class="nav-item"><i class="fa-solid fa-headset"></i> Support</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="user-mini">
+        <div class="avatar" id="sidebarAvatar">JD</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarUserName">John Daddy</div>
+          <div class="user-role">Premium Member</div>
+        </div>
+        <i class="fa-solid fa-right-from-bracket logout-btn" id="logoutBtn" title="Logout"></i>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="page-title">Support & Help</div>
+          <div class="page-subtitle">We're here for you 24/7</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <!-- HERO BANNER -->
+      <div style="background:linear-gradient(135deg,var(--navy-light),var(--navy));border-radius:var(--radius);padding:40px;color:var(--white);margin-bottom:28px;text-align:center;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(201,168,76,0.1) 0%,transparent 60%);"></div>
+        <div style="position:relative;z-index:1;">
+          <div style="width:64px;height:64px;background:rgba(201,168,76,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:28px;color:var(--gold);">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <h2 style="font-size:32px;margin-bottom:12px;">How Can We Help?</h2>
+          <p style="color:rgba(255,255,255,0.6);max-width:500px;margin:0 auto 24px;">Our dedicated team is available around the clock to assist you with any questions or concerns.</p>
+          <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+            <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:12px 20px;font-size:13px;"><i class="fa-solid fa-clock" style="color:var(--gold);margin-right:8px;"></i>Available 24/7</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:12px 20px;font-size:13px;"><i class="fa-solid fa-bolt" style="color:var(--gold);margin-right:8px;"></i>Avg. response: &lt;2 min</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:12px 20px;font-size:13px;"><i class="fa-solid fa-star" style="color:var(--gold);margin-right:8px;"></i>4.9/5 satisfaction</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT OPTIONS -->
+      <div class="support-grid" style="margin-bottom:28px;">
+        <div class="support-option" onclick="Toast.info('Live Chat', 'Connecting you to a support agent...')">
+          <i class="fa-solid fa-comment-dots"></i>
+          <h3>Live Chat</h3>
+          <p>Chat with our support team instantly. Fastest way to get help.</p>
+          <div style="margin-top:16px;"><span class="badge completed"><i class="fa-solid fa-circle" style="font-size:8px;"></i> Online Now</span></div>
+        </div>
+        <div class="support-option" onclick="Toast.info('Phone Support', 'Our number: 1-800-DMB-BANK')">
+          <i class="fa-solid fa-phone"></i>
+          <h3>Phone Support</h3>
+          <p>Speak directly with a banking specialist anytime.</p>
+          <div style="margin-top:16px;font-size:18px;font-weight:700;font-family:'Playfair Display',serif;color:var(--navy);">1-800-DMB-BANK</div>
+        </div>
+        <div class="support-option" onclick="Toast.info('Email Support', 'Email: support@daddysmoney.com')">
+          <i class="fa-solid fa-envelope"></i>
+          <h3>Email Support</h3>
+          <p>Send us a detailed message and we'll respond within 1 hour.</p>
+          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--navy-light);">support@daddysmoney.com</div>
+        </div>
+        <div class="support-option" onclick="Toast.info('Help Center', 'Opening knowledge base...')">
+          <i class="fa-solid fa-book-open"></i>
+          <h3>Help Center</h3>
+          <p>Browse our knowledge base for guides and tutorials.</p>
+          <div style="margin-top:16px;"><button class="btn btn-outline btn-sm">Browse Articles →</button></div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:24px;">
+        <!-- CONTACT FORM -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Send a Message</div>
+              <div class="card-subtitle">We'll get back to you within the hour</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <div class="input-wrap">
+              <select id="ticketSubject" class="no-icon" style="padding-left:16px;">
+                <option value="">Select a topic...</option>
+                <option>Account Access Issue</option>
+                <option>Transaction Dispute</option>
+                <option>Transfer Problem</option>
+                <option>Card Issue</option>
+                <option>Billing Question</option>
+                <option>Security Concern</option>
+                <option>Feature Request</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Priority</label>
+            <div style="display:flex;gap:10px;">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;font-weight:500;">
+                <input type="radio" name="priority" value="low" style="width:auto;padding:0;" checked> Low
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;font-weight:500;">
+                <input type="radio" name="priority" value="medium" style="width:auto;padding:0;"> Medium
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;font-weight:500;">
+                <input type="radio" name="priority" value="high" style="width:auto;padding:0;"> High
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;font-weight:500;">
+                <input type="radio" name="priority" value="urgent" style="width:auto;padding:0;"> Urgent
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Your Message</label>
+            <div class="input-wrap">
+              <textarea id="ticketMsg" placeholder="Describe your issue in detail..." rows="5" style="padding:14px 16px;resize:vertical;min-height:120px;" class="no-icon"></textarea>
+            </div>
+          </div>
+          <button class="btn btn-gold btn-full" onclick="submitTicket()">
+            <i class="fa-solid fa-paper-plane"></i> Submit Ticket
+          </button>
+        </div>
+
+        <!-- FAQ -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Frequently Asked Questions</div>
+          </div>
+          <div id="faqList" style="display:flex;flex-direction:column;gap:0;"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  const user = DMB.requireAuth();
+  if (user) {
+    initSidebar();
+
+    const faqs = [
+      { q: 'How do I transfer money to another account?', a: 'Go to Transfer Money in the sidebar, enter the recipient\'s email or account number, enter the amount, and confirm.' },
+      { q: 'Are transfers instant?', a: 'Yes! Transfers between Daddy\'s Money Bank accounts are instant with no fees.' },
+      { q: 'How do I change my password?', a: 'Go to Profile & Settings, scroll to the Security section, and update your password there.' },
+      { q: 'Can I export my transaction history?', a: 'Yes! Go to Transaction History and click the download icon in the top right to export a CSV file.' },
+      { q: 'What is the daily transfer limit?', a: 'Premium members enjoy unlimited daily transfers with no caps.' },
+      { q: 'How do I report a suspicious transaction?', a: 'Contact our support team immediately via Live Chat or call 1-800-DMB-BANK.' },
+    ];
+
+    document.getElementById('faqList').innerHTML = faqs.map((f, i) => `
+      <div style="border-bottom:1px solid var(--gray-100);">
+        <button onclick="toggleFaq(${i})" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:16px 0;background:none;border:none;cursor:pointer;text-align:left;font-family:'DM Sans',sans-serif;">
+          <span style="font-size:14px;font-weight:600;color:var(--navy);padding-right:12px;">${f.q}</span>
+          <i class="fa-solid fa-chevron-down" id="faqIcon${i}" style="color:var(--gray-400);font-size:12px;flex-shrink:0;transition:transform 0.3s;"></i>
+        </button>
+        <div id="faqBody${i}" style="display:none;padding:0 0 16px;font-size:14px;color:var(--gray-600);line-height:1.7;">${f.a}</div>
+      </div>
+    `).join('');
+
+    function toggleFaq(i) {
+      const body = document.getElementById('faqBody' + i);
+      const icon = document.getElementById('faqIcon' + i);
+      const open = body.style.display !== 'none';
+      // Close all
+      faqs.forEach((_, j) => {
+        document.getElementById('faqBody' + j).style.display = 'none';
+        document.getElementById('faqIcon' + j).style.transform = '';
+      });
+      if (!open) {
+        body.style.display = 'block';
+        icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    function submitTicket() {
+      const subject = document.getElementById('ticketSubject').value;
+      const msg = document.getElementById('ticketMsg').value.trim();
+      if (!subject) { Toast.error('Select a Topic', 'Please choose a subject for your ticket.'); return; }
+      if (!msg) { Toast.error('Message Required', 'Please describe your issue.'); return; }
+      const btn = event.target;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+      setTimeout(() => {
+        Toast.success('Ticket Submitted!', 'Your support request has been received. Ticket #DMB-' + Math.floor(10000 + Math.random() * 90000));
+        document.getElementById('ticketSubject').value = '';
+        document.getElementById('ticketMsg').value = '';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Submit Ticket';
+      }, 1500);
+    }
+
+    window.toggleFaq = toggleFaq;
+    window.submitTicket = submitTicket;
+  }
+</script>
+</body>
+</html>

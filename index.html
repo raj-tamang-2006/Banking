@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login – Daddy's Money Bank</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div id="loadingOverlay" class="loading-overlay">
+  <div class="loader">
+    <div class="logo-icon"><i class="fa-solid fa-landmark"></i></div>
+    <p>Loading...</p>
+  </div>
+</div>
+
+<div class="auth-page">
+  <div class="auth-left">
+    <div class="auth-brand">
+      <div class="logo">
+        <div class="logo-icon"><i class="fa-solid fa-landmark"></i></div>
+        <div class="logo-text">Daddy's Money Bank<span>Private Banking</span></div>
+      </div>
+      <h1>Banking for <em>Those Who Know</em> Better.</h1>
+      <p>Experience luxury banking with world-class security, premium features, and the personal touch you deserve.</p>
+      <ul class="auth-features">
+        <li><i class="fa-solid fa-shield-halved"></i>256-bit bank-grade security</li>
+        <li><i class="fa-solid fa-clock-rotate-left"></i>24/7 real-time transaction monitoring</li>
+        <li><i class="fa-solid fa-infinity"></i>Unlimited free transfers worldwide</li>
+        <li><i class="fa-solid fa-headset"></i>Dedicated concierge support</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-form-container">
+      <h2>Welcome Back</h2>
+      <p>Sign in to your account to continue.</p>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <div class="input-wrap">
+          <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email">
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <input type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password">
+          <i class="fa-solid fa-lock"></i>
+          <i class="fa-solid fa-eye toggle-pw"></i>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;margin-bottom:24px;">
+        <a href="#" class="text-link" style="font-size:13px;">Forgot password?</a>
+      </div>
+
+      <button class="btn btn-primary btn-full btn-lg" id="loginBtn" onclick="handleLogin()">
+        <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
+      </button>
+
+      <div style="display:flex;align-items:center;gap:12px;margin:24px 0;">
+        <hr style="flex:1;border:none;height:1px;background:var(--gray-200);">
+        <span style="font-size:12px;color:var(--gray-400);white-space:nowrap;">or continue with</span>
+        <hr style="flex:1;border:none;height:1px;background:var(--gray-200);">
+      </div>
+
+      <div style="background:var(--gray-100);border-radius:10px;padding:16px;margin-bottom:24px;border:1px solid var(--gray-200);">
+        <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-400);margin-bottom:10px;">Demo Account</p>
+        <p style="font-size:13px;color:var(--navy);margin-bottom:4px;"><strong>Email:</strong> demo@daddysmoney.com</p>
+        <p style="font-size:13px;color:var(--navy);"><strong>Password:</strong> demo1234</p>
+        <button class="btn btn-outline btn-sm" style="margin-top:12px;width:100%;" onclick="fillDemo()">
+          <i class="fa-solid fa-bolt"></i> Use Demo Login
+        </button>
+      </div>
+
+      <div class="auth-switch">
+        Don't have an account? <a href="signup.html" class="text-link">Create one free</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  // Redirect if already logged in
+  if (DMB.getSession()) window.location.href = 'dashboard.html';
+
+  function fillDemo() {
+    document.getElementById('loginEmail').value = 'demo@daddysmoney.com';
+    document.getElementById('loginPassword').value = 'demo1234';
+  }
+
+  function handleLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    const valid = validateForm([
+      { id: 'loginEmail', check: v => v && /\S+@\S+\.\S+/.test(v), msg: 'Enter a valid email address.' },
+      { id: 'loginPassword', check: v => v.length >= 4, msg: 'Password is required.' }
+    ]);
+    if (!valid) return;
+
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Signing In...';
+
+    setTimeout(() => {
+      const result = DMB.login(email, password);
+      if (result.ok) {
+        Toast.success('Welcome back!', `Good to see you, ${result.user.firstName}!`);
+        setTimeout(() => window.location.href = 'dashboard.html', 800);
+      } else {
+        Toast.error('Login Failed', result.msg);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In';
+      }
+    }, 1000);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleLogin();
+  });
+</script>
+</body>
+</html>
